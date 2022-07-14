@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let keyboardView = KeyboardView(frame: CGRect(x: 0, y: 0, width: 0, height: 300))
+        let keyboardView = KeyboardView()
+        keyboardView.translatesAutoresizingMaskIntoConstraints = true
+        keyboardView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         keyboardView.onKeyTappedAction = { [weak self] (keyword) in
             guard let self = self else { return }
             print("keyword = ",keyword)
@@ -21,13 +23,15 @@ class ViewController: UIViewController {
         }
         keyboardView.onCloseKeyTappedAction = { [weak self] in
             guard let self = self else { return }
-            var string: String = ""
-            if self.textfield.text == "" {
-                string = ""
-            } else {
-                string = self.textfield.text ?? ""
-            }
-            self.textfield.text = "\(string.dropLast())"
+//            var string: String = ""
+//            if self.textfield.text == "" {
+//                string = ""
+//            } else {
+//                string = self.textfield.text ?? ""
+//            }
+//            self.textfield.text = "\(string.dropLast())"
+            
+            self.textfield.deleteBackward()
         }
         textfield.inputView = keyboardView
     }
